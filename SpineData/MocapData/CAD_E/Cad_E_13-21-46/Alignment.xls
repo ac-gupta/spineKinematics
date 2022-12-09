@@ -1,0 +1,20 @@
+User:	G	L	
+Date:	8/9/2022	11:44 AM	
+Protocol:	Cad_E.xml		
+Description:	9 techniques, 2 conditions(collar on/off),3 trials each 		
+Cadaver ID:	Echo		
+Trial:	  6.3 LogRoll_C  		
+Attempt:	1		
+			
+			
+Add notes here!			
+Units are millimeters, degrees,seconds
+X	Y	Z	Azimuth	Elevation	Roll
+0.0000000	0.0000000	0.0000000	-14.9004965	14.3872042	9.8957872
+0.0000000	0.0000000	0.0000000	-10.7141418	11.8844776	-168.9727783
+0.0000000	0.0000000	0.0000000	-89.6243134	4.1622491	179.7456512
+0.0000000	0.0000000	0.0000000	-93.7902222	7.6502800	19.3777142
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN

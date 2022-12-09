@@ -1,0 +1,12 @@
+Workflow:
+
+- Write script to change extensions to TXT
+- Read in data with ReadMocap script
+SOMETHING
+
+- bring in CT scans
+- fit cylinder
+- coordinate transforms 
+- 2D SAC analysis
+- 3D SAC analysis
+- fea study

@@ -1,0 +1,20 @@
+User:	Cong	Chen	
+Date:	8/8/2022	10:16 AM	
+Protocol:	Cad_D.xml		
+Description:	9 techniques, 2 conditions(collar on/off),3 trials each 		
+Cadaver ID:	Delta		
+Trial:	  1.6 LTP_Standard_NC  		
+Attempt:	1		
+			
+			
+Add notes here!			
+Units are millimeters, degrees,seconds
+X	Y	Z	Azimuth	Elevation	Roll
+0.0000000	0.0000000	0.0000000	-11.2318573	0.3405611	4.6638904
+0.0000000	0.0000000	0.0000000	-10.1866522	26.9498672	175.7662201
+0.0000000	0.0000000	0.0000000	-99.8668976	13.4844418	176.1182251
+0.0000000	0.0000000	0.0000000	-81.2851562	2.0854931	-22.4627800
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN

@@ -1,0 +1,20 @@
+User:	Cong	Chen	
+Date:	8/10/2022	2:11 PM	
+Protocol:	ROM(1)_N.xml		
+Description:	Range of Motion Tests		
+Cadaver ID:	Golf		
+Trial:	  2.Cext  		
+Attempt:	1		
+			
+			
+Add notes here!			
+Units are millimeters, degrees,seconds
+X	Y	Z	Azimuth	Elevation	Roll
+0.0000000	0.0000000	0.0000000	-2.7264574	7.0633202	-0.4873437
+0.0000000	0.0000000	0.0000000	-9.1254263	6.1229873	-177.1995850
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN

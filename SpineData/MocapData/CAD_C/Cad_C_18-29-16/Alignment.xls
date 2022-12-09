@@ -1,0 +1,20 @@
+User:	Cong	Chen	
+Date:	8/8/2022	3:44 PM	
+Protocol:	Cad_C.xml		
+Description:	9 techniques, 2 conditions(collar on/off),3 trials each 		
+Cadaver ID:	Charlie		
+Trial:	  9.1 MPerson_Strap_NC  		
+Attempt:	1		
+			
+			
+Add notes here!			
+Units are millimeters, degrees,seconds
+X	Y	Z	Azimuth	Elevation	Roll
+0.0000000	0.0000000	0.0000000	-1.3604648	0.4574196	9.2139101
+0.0000000	0.0000000	0.0000000	-4.1828489	32.6981621	-165.8705444
+0.0000000	0.0000000	0.0000000	-95.4941177	7.0881772	-176.5829468
+0.0000000	0.0000000	0.0000000	-93.2649002	1.7078911	9.5581913
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
+0.0000000	0.0000000	0.0000000	NaN	NaN	NaN
