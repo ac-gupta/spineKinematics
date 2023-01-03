@@ -1,8 +1,15 @@
-addpath('C:/Users/acgis/Documents/Research/Banks_Lab/SpineData/Sample');
-addpath('C:/Users/acgis/Documents/Research/Banks_Lab/SpineData/MatlabScripts');
-addpath('C:/Users/acgis/Documents/Research/Banks_Lab/SpineData/MatlabScripts/iso2mesh-1.9.6');
-addpath('C:/Users/acgis/Box/Brodke Research CTs 8-11-22')
-addpath("C:\Users\acgis\Documents\Research\Banks_Lab\SpineData\MocapData\CAD_A\Cad_A_14-12-05")
+% addpath('C:/Users/acgis/Documents/Research/Banks_Lab/SpineData/Sample');
+% addpath('C:/Users/acgis/Documents/Research/Banks_Lab/SpineData/MatlabScripts');
+% addpath('C:/Users/acgis/Documents/Research/Banks_Lab/SpineData/MatlabScripts/iso2mesh-1.9.6');
+% addpath('C:/Users/acgis/Box/Brodke Research CTs 8-11-22')
+% addpath("C:\Users\acgis\Documents\Research\Banks_Lab\SpineData\MocapData\CAD_A\Cad_A_14-12-05")
+
+addpath('C:/Users/Vinay Gupta/Documents/Amiya/GitHub/spineKinematics/SpineData/Sample');
+addpath('C:/Users/Vinay Gupta/Documents/Amiya/GitHub/spineKinematics/SpineData/MatlabScripts');
+addpath('C:/Users/Vinay Gupta/Documents/Amiya/GitHub/spineKinematics/MatlabScripts/iso2mesh-1.9.6');
+%addpath('C:/Users/acgis/Box/Brodke Research CTs 8-11-22')
+addpath("C:\Users\Vinay Gupta\Documents\Amiya\GitHub\spineKinematics\SpineData\MocapData\CAD_A\Cad_A_14-12-05")
+
 
 fileDir = ("Sample/LSP_AX_2_Thresh");
 
@@ -16,13 +23,13 @@ beadFiles = {"Alpha_C5_beads.stl", "Alpha_C6_beads.stl", "Alpha_C5_beads.txt", "
 alignmentPath = "AlphaAlignment.mat";
 load("polhemusTbeadV2.mat");
 mocapPath = "Raw - copy.txt";
-videoPath = "test_12.2_3";
+videoPath = "test_12.24_1";
 
 pixConv = 0.0285*0.0285;
 
 
 %%  Set up figure/mesh
-f = figure('Position',[1 0 640 640],'Visible', 'off');
+f = figure('Position',[1 0 640 640],'Visible', 'on');
 
 [faces,vertices] = readSTL(boneFiles{1});
 bone.C5.Faces = faces;
@@ -66,7 +73,7 @@ results = zeros(length(pose.C5), 6);
 
 
 
-%N = 2; %% comment this line out when running Lol
+N = 1; %% comment this line out when running Lol
 for idx = 1:N
 
 %     waitbar(idx/N, f, sprintf('Frame %d/%d', idx, N));    
@@ -75,6 +82,11 @@ for idx = 1:N
     end
     globalTpolC5 = pose.C5{idx};
     globalTpolC6 = pose.C6{idx};
+
+    % temporary
+   polTbead.C6([2,3],:) = -polTbead.C6([2,3],:);
+    polTbead.C6(3, 4) = -polTbead.C6(3,4);
+
     
     % globalTOmarker * markerTObead * beadTObone = globalTObone
     glo.C5{idx} = (globalTpolC5) * (polTbead.C5) * beadTbone.C5;
@@ -84,7 +96,7 @@ for idx = 1:N
 %     glo.C6{idx} = (globalTpolC6) * (beadTbone.C6);
     
     
-%     glo.C5{idx} = globalTpolC5;
+%    glo.C5{idx} = globalTpolC5;
 %     glo.C6{idx} = globalTpolC6;
     
     
@@ -103,7 +115,7 @@ for idx = 1:N
 
     C6_temp.Vertices = C6_temp_verts(1:3, :)';
     
-    C6_temp_verts = glo.C5{idx} * C6verts;
+    C6_temp_verts = glo.C6{idx} * C6verts;
         C6_temp.Vertices = C6_temp_verts(1:3, :)';
 
 
@@ -179,13 +191,13 @@ for idx = 1:N
          axis manual
      end
         
-     clf
+     %clf
 %      
 end
 %  close(f)
 
 vid_out = write_avi_animation(videoPath, animation);
 
-close(gcf);
+%close(gcf);
 
 

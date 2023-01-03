@@ -12,6 +12,13 @@ function mat = readCalib(filename, type, stl)
         case 'bone'
             Yp = data(3,:);
             Z = data(2,:);
+
+            if Yp(1) > 0
+                Yp = -1*Yp;
+            end
+            if Z(3) < 0
+                Z = -1*Z;
+            end
             
             X = cross(Yp, Z);
             Z = cross(X, Yp);
@@ -27,7 +34,14 @@ function mat = readCalib(filename, type, stl)
             
             % Xp x Yp = Z; Yp x Z = X
             Z = cross(Xp, Y);
-            X = cross(Y, Z);
+            Xtemp = cross(Y, Z);
+
+           % make CS align with Vertebrae system
+            X = Z;
+            Z = Y;
+            Y = Xtemp;
+
+
  
     end
     
