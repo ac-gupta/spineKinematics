@@ -1,0 +1,10 @@
+Origin X,Y,Z
+Z X,Y,Z
+Y' X,Y,Z
+
+LI X, Y, Z
+LS X, Y, Z
+RI X, Y, Z
+
+Alpha_C5.txt
+Alpha_C5_beads.txt

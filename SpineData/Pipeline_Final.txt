@@ -1,0 +1,17 @@
+Input: 
+boneFiles (stl file names, txt files)
+bead files (stl file names, txt files)
+polhemusTbeadV2.mat
+alignmentPath (.mat file)
+mocapPath ("Raw - copy.txt")
+videoPath (what to put in)
+polhemus Files
+
+Files Used:
+ReadMocap_v2
+readCalib
+plotCalib
+readSTL
+
+Output:
+What data do they want out?

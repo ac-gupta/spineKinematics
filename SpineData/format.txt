@@ -1,3 +1,0 @@
-Origin X,Y,Z
-Z X,Y,Z
-Y' X,Y,Z
