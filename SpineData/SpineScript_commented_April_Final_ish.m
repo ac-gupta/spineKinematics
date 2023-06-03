@@ -12,12 +12,12 @@ warning('off', 'all')
 
 %args to pass in: boneFiles (stls), polhemusTbeat mat, mocap data
 
-boneFiles = {"Alpha_C5.stl", "Alpha_C6.stl", "Alpha_C5.txt", "Alpha_C6.txt"};
-beadFiles = {"Alpha_C5_beads.stl", "Alpha_C6_beads.stl", "Alpha_C5_beads.txt", "Alpha_C6_beads.txt"};
-alignmentPath = "AlphaAlignment.mat";
+boneFiles = {"Charlie_C5.stl", "Charlie_C6.stl", "Charlie_C5.txt", "Charlie_C6.txt"};
+beadFiles = {"Charlie_C5_beads.stl", "Charlie_C6_beads.stl", "Charlie_C5_beads.txt", "Charlie_C6_beads.txt"};
+alignmentPath = "";
 load("polhemusTbeadV2.mat");
-mocapPath = "Raw - copy.txt";
-videoPath = "Alpha_Try2";
+mocapPath = 'C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/MocapData/CAD_C/Cad_C_16-11-13/Raw.txt';
+videoPath = "Charlie_Try2";
 
 polhemusFiles = {"C5_PolhemusShelf.stl", "C6_Pair.stl"};
 
@@ -51,7 +51,7 @@ for n = 1:2
 end
 
 % plot the coordinate systems as a double check
-stls = ["Alpha_C5.stl", "Alpha_C6.stl", beadFiles{1:2}];
+stls = ["Charlie_C5.stl", "Charlie_C6.stl", beadFiles{1:2}];
 mats = {vertTglobal.C5, vertTglobal.C6, beadTglobal.C5, beadTglobal.C6};
 plotCalib(mats, stls);
 

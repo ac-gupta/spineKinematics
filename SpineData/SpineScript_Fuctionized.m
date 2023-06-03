@@ -1,3 +1,4 @@
+function [distraction, sacMM, bone] = spineProcessing(alignmentPath, posePath, boneFiles, beadFiles, polhemusFiles)
 
 % Load in constant matrices, etc.
 
@@ -11,8 +12,11 @@ verts = {'C5', 'C6'};
 
 % load in mocap data: 
 pose = ReadMocap_v2(posePath);
+alignMat = readAlignment(alignmentPath);
+
+
 %%  Set up figure/mesh
-f = figure('Position',[1 0 640 640],'Visible', 'on', 'HandleVisibility', 'on');
+f = figure('Position',[1 0 640 640],'Visible', 'off', 'HandleVisibility', 'on');
 frame = 1;
 %% load matrices
 
@@ -48,7 +52,7 @@ C6_temp.Faces = faces;
 
 C6verts  = [vertices.'; ones(1,length(vertices.'))];
 
-%% Rotate both meshes to be orthogonal to C5
+%% Rotate both meshes to be orthogonal
 
     C5verts = inv(vertTglobal.C5) * C5verts;
     bone.C5.Vertices = C5verts(1:3, :)';
@@ -61,6 +65,7 @@ C6verts  = [vertices.'; ones(1,length(vertices.'))];
 N = length(pose.C5);
 results = zeros(length(pose), 6);
 
+ N = 5;
 try
     for idx = 1:N
 
@@ -107,6 +112,11 @@ try
         % Calculate result Euler angles and AzElRo
         results(idx, 1:3) = (C6toC5{idx}(1:3, 4)).';
         results(idx, 4:6) = getRotations(123, C6toC5{idx});
+        
+        [C5Inf, C5Sup] = findMinimums(bone.C5, 1);
+        [C6Inf, C6Sup] = findMinimums(bone.C6, 1);
+        
+        distraction = results(:,3) + C5Inf - C6Sup;
 
        % Fix the axes scaling, and set a nice view angle
        axis('off')
@@ -208,7 +218,10 @@ try
         if mod(idx, 400) == 0
             vidOut(sac, animation, videoPath)
         end
+        
     end
+    
+    vidOut(sac, animation, videoPath)
     
 catch ME
     fprintf("Error at frame: %f", idx);
@@ -216,6 +229,8 @@ catch ME
 end
 
   %close(f)
+  
+end
 
 %% Write Videos
 

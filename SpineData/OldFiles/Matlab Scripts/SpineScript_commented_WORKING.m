@@ -12,12 +12,12 @@ warning('off', 'all')
 
 %args to pass in: boneFiles (stls), polhemusTbeat mat, mocap data
 
-boneFiles = {"Alpha_C5.stl", "Alpha_C6.stl", "Alpha_C5.txt", "Alpha_C6.txt"};
-beadFiles = {"Alpha_C5_beads.stl", "Alpha_C6_beads.stl", "Alpha_C5_beads.txt", "Alpha_C6_beads.txt"};
-alignmentPath = "AlphaAlignment.mat";
+boneFiles = {"Charlie_C5.stl", "Charlie_C6.stl", "Charlie_C5.txt", "Charlie_C6.txt"};
+beadFiles = {"Charlie_C5_beads.stl", "Charlie_C6_beads.stl", "Charlie_C5_beads.txt", "Charlie_C6_beads.txt"};
+alignmentPath = "";
 load("polhemusTbeadV2.mat");
-mocapPath = "Raw - copy.txt";
-videoPath = "test_4.17";
+mocapPath = 'C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/MocapData/CAD_C/Cad_C_16-11-13/Raw.txt';
+videoPath = "Charlie_Try2";
 
 polhemusFiles = {"C5_PolhemusShelf.stl", "C6_Pair.stl"};
 
@@ -30,7 +30,7 @@ verts = {'C5', 'C6'};
 plotExtra = 1;
 
 %%  Set up figure/mesh
-f = figure('Position',[1 0 640 640],'Visible', 'off');
+f = figure('Position',[1 0 640 640],'Visible', 'on');
 
 %% load matrices
 
@@ -57,17 +57,17 @@ for n = 1:2
 end
 
 % plot the coordinate systems as a double check
-stls = ["Alpha_C5.stl", "Alpha_C6.stl", beadFiles{1:2}];
+stls = {boneFiles{1:2}, beadFiles{1:2}};
 mats = {vertTglobal.C5, vertTglobal.C6, beadTglobal.C5, beadTglobal.C6};
 plotCalib(mats, stls);
 
-% load in alignment data
- alignment = load(alignmentPath);
-alignMat = getAttMat([repmat(0,4,3), alignment.alignment]);
-
-% relative alignment: alignment of C5 to C6
-relAlign = inv(alignMat{1}) * alignMat{2};
-% relAlign = alignMat{2} * inv(alignMat{1});
+% % load in alignment data
+%  alignment = load(alignmentPath);
+% alignMat = getAttMat([repmat(0,4,3), alignment.alignment]);
+% 
+% % relative alignment: alignment of C5 to C6
+% relAlign = inv(alignMat{1}) * alignMat{2};
+% % relAlign = alignMat{2} * inv(alignMat{1});
 %% Create Meshes
 
 [faces,vertices] = readSTL(boneFiles{1});
@@ -148,7 +148,6 @@ DCM = vertTglobal.C5;
 N = length(pose);
 results = zeros(length(pose), 6);
 
-N = 10
 for idx = 1:N
 
     % shows progress
@@ -164,6 +163,9 @@ for idx = 1:N
 
     C5PoltoGlobal = pose.C5{idx};
     C6PoltoGlobal = pose.C6{idx};
+    
+%     C5PoltoGlobal = eye(4);
+%     C6PoltoGlobal = eye(4);
 
     C5beadtoGlobal = C5PoltoGlobal * (polTbead.C5);
     C6beadtoGlobal = C6PoltoGlobal * (polTbead.C6);
@@ -174,7 +176,7 @@ for idx = 1:N
     % this is never actually used, I'm sure it needs to be but I can't
     % figure out how
     %                           bead 5 wrt pol 5      bone 6 invwrt bead 6 
-    C5toPol5 =inv(alignMat{1}) * (polTbead.C5)     *   (boneTbead.C5);
+%     C5toPol5 =inv(alignMat{1}) * (polTbead.C5)     *   (boneTbead.C5);
     C5toPol5 = boneTbead.C5 * inv(polTbead.C5);
 
 %     C5toC6{idx} = inv(C6toPol5{1}) * inv(C5toPol5);
@@ -246,7 +248,7 @@ for idx = 1:N
     
    % Fix the axes scaling, and set a nice view angle
    axis('off')
-     subplot_tight(2,1,1,[])
+      subplot_tight(2,1,1,[])
        axis('off');
        grid('off');
        axis('equal');
@@ -266,7 +268,7 @@ for idx = 1:N
              'BackFaceLighting', 'reverselit',...
               'FaceAlpha', 0.8, ...
               'AmbientStrength', 0.9); 
-%           
+          
           patch(beadTemp.C5, 'FaceColor', colors{1}, ...
              'EdgeColor', 'none', ...
              'FaceLighting', 'gouraud', ...
@@ -280,7 +282,7 @@ for idx = 1:N
              'BackFaceLighting', 'reverselit',...
               'FaceAlpha', 0.8, ...
               'AmbientStrength', 0.9); 
-%           
+          
          patch(polC5_temp, 'FaceColor', colors{1}, ...
              'EdgeColor', 'none', ...
              'FaceLighting', 'gouraud', ...
@@ -295,7 +297,7 @@ for idx = 1:N
               'FaceAlpha', 0.8, ...
               'AmbientStrength', 0.9); 
 
-         %          Add camera lights
+                %  Add camera lights
          light('Position',[0 -1 0],'Style','infinite')
          camlight('headlight');
          material('dull');
@@ -406,7 +408,7 @@ for idx = 1:N
              light('Position',[0 -1 0],'Style','infinite')
              camlight('headlight');
              material('dull');
-% %     
+%     
      
      animation(idx) = getframe(gcf);
      

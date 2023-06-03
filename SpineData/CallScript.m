@@ -1,47 +1,92 @@
 %% Call Script
 
 %% Add Paths
+homePath = "C:/Users/acgis/Documents/GitHub/SpineKinematics/SpineData/";
+addpath(homePath + "Sample");
+addpath(homePath + "StockMatlabScripts");
+addpath(homePath + "CustomMatlabScripts");
+addpath(homePath + "StaticTransformationMatrices");
 
-addpath('C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/Sample');
-addpath('C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/StockMatlabScripts');
-addpath('C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/CustomMatlabScripts');
-addpath('C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/StaticTransformationMatrices');
+mocapPath = homePath + 'MocapData';
+CADPath = homePath + 'CTSegmentations';
 
-mocapPath = 'C:\Users\acgis\Documents\GitHub\spineKinematics\SpineData\MocapData';
-CADPath = 'C:/Users/acgis/Documents/GitHub/spineKinematics/SpineData/CTSegmentations';
+addpath(mocapPath)
+
+% load pol2bead matrices (static)
+polTbead = load("polhemusTBeadV2.mat");
+    polTbead = polTbead.polTbead;
 
 warning('off', 'all')
 %% Patient Specific
 
-patientCode = 'Alpha';
-patientPath = '\CAD_A\Cad_A_14-15-09\';
+patientCode = 'Epsilon';
 
-% name of output render (will output videos _render.mp4 and _sac.mp4)
-videoPath = string([patientPath 'output']);
-%% Choose files
+% set output dir
+outDir =  homePath + 'ProcessedData/' + patientCode;
 
-alignmentPath = [mocapPath patientPath 'Alignment.txt'];
-posePath = [mocapPath patientPath 'Raw.txt'];
-
-% Turn XLS into TXT
-copyfile([mocapPath patientPath 'Alignment.xls'], alignmentPath);
-copyfile([mocapPath patientPath 'Raw.xls'], posePath);
+    if ~exist(outDir, 'dir')
+        mkdir(outDir)
+    end
 
 % Find STL files
 addpath(CADPath)
 
-STLdir = [CADPath '\' patientCode];
-boneFiles = {[STLdir 'STL\'  patientCode '_C5.stl'], [STLdir 'STL\' patientCode '_C6.stl'], ...
-    [STLdir '\' patientCode '_C5.txt'], [STLdir '\' patientCode '_C6.txt']};
+STLdir = [char(CADPath) '/' patientCode];
+boneFiles = {[STLdir 'STL/'  patientCode '_C5.stl'], [STLdir 'STL/' patientCode '_C6.stl'], ...
+    [STLdir '/' patientCode '_C5.txt'], [STLdir '/' patientCode '_C6.txt']};
 
-beadFiles = {[STLdir 'STL\'  patientCode '_C5_beads.stl'], [STLdir 'STL\' patientCode '_C6_beads.stl'], ...
-    [STLdir '\' patientCode '_C5_beads.txt'], [STLdir '\' patientCode '_C6_beads.txt']};    
+beadFiles = {[STLdir 'STL/'  patientCode '_C5_beads.stl'], [STLdir 'STL/' patientCode '_C6_beads.stl'], ...
+    [STLdir '/' patientCode '_C5_beads.txt'], [STLdir '/' patientCode '_C6_beads.txt']};    
 
-polhemusFiles = {[CADPath 'C5_PolhemusShelf.stl'], [CADPath 'C6_Pair.stl']};
 
 boneFiles = string(boneFiles);
 beadFiles = string(beadFiles);
-polhemusFiles = string(polhemusFiles);
 
-%once I know outputs wanted, this will be a function not a run statement
-run('C:\Users\acgis\Documents\GitHub\spineKinematics\SpineData\SpineScript_Fuctionized.m')
+%% Loop through patient directory
+
+CAD_code = "/CAD_"+patientCode(1);
+dirs = dir(mocapPath+CAD_code);
+
+    for i = 1:numel(dirs)-2
+        trialName(i) = string(dirs(i+2).name);
+    end
+%% Trial Specific
+%patientPath = '/CAD_E/Cad_E_11-05-07/';
+
+try
+    for trial = 1:length(trialName)
+        patientPath = CAD_code + "/" + trialName(trial);
+
+        patientPath = char(patientPath);
+
+        %% set output path
+        % e.g., ../GitHub/spineKinematics/SpineData/ProcessedData/Epsilon
+
+        % name of output render (will output videos Cad_B_11-10-50_render.mp4 and _sac.mp4)
+        outputPath = strsplit(patientPath, '/');
+        outputPath = outDir + "/" + string(outputPath{3});
+        %% Choose files
+
+        alignmentPath = mocapPath + patientPath + "/Alignment";
+        posePath = mocapPath + patientPath + "/Raw";
+
+        % Turn XLS into TXT
+        copyfile(alignmentPath+".xls", alignmentPath+".txt");
+        copyfile(posePath+".xls", posePath+".txt");
+
+
+        [distraction, sacMM, ~] = spineProcessing(...
+            alignmentPath, posePath, boneFiles, beadFiles, outputPath, polTbead);
+
+        writematrix(distraction, outputPath+"_distraction.txt");
+        writematrix(cell2mat(sacMM), outputPath+"_sacMM");
+    
+    end
+
+catch ME
+    fprintf("Error at patient: %s", trialName(trial));
+    fprintf('Line %d: Error Message:\n%s', ...
+    ME.stack(1).line, ME.message);
+end
+
+    
