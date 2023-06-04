@@ -1,0 +1,7 @@
+checkpoint: 11-23-13
+frame: 1063
+
+to do:
+- set up for batch processing
+- fix render/videopath issue in callscript-> process
+- set up checkpoints/run from checkpoints

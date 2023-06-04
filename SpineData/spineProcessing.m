@@ -1,4 +1,4 @@
-function [distraction, sacMM, bone] = spineProcessing(alignmentPath, posePath, boneFiles, beadFiles, videoPath, polTbead)
+function [distraction, sacMM, bone] = spineProcessing(alignmentPath, posePath, boneFiles, beadFiles, videoPath, render, readFromCheckpoint, checkpoint, polTbead)
 
 % pixel conversion from dicom file
 pixConv = 0.0285*0.0285;
@@ -12,8 +12,10 @@ alignMat = readAlignment(alignmentPath + ".txt");
 
 
 %%  Set up figure/mesh
-f = figure('Position',[1 0 640 640],'Visible', 'off', 'HandleVisibility', 'on');
-frame = 1;
+if render == "Y"
+    f = figure('Position',[1 0 640 640],'Visible', 'off', 'HandleVisibility', 'on');
+    frame = 1;
+end
 %% load matrices
 
 for n = 1:2
@@ -56,14 +58,24 @@ C6verts  = [vertices.'; ones(1,length(vertices.'))];
     C6verts = inv(vertTglobal.C6) * C6verts;
     bone.C6.Vertices = C6verts(1:3,:)';
     
-%% set up loop
+    [C5Inf, ~] = findMinimums(bone.C5, 0);
+    [~, C6Sup] = findMinimums(bone.C6, 0);
+%% Set up loop
 
 N = length(pose.C5);
 results = zeros(length(pose), 6);
 
-N = 5;
+if readFromCheckpoint == "N"
+    start = 1;
+    sacMM = [];
+else
+    start = checkpoint.start+1;
+    sacMM = checkpoint.sacMM;
+    distraction = checkpoint.distraction;
+end
+
 try
-    for idx = 1:N
+    for idx = start:N
 
         % shows progress
         if mod(idx, 10) == 0
@@ -94,24 +106,27 @@ try
 %             else
 %                 [sacMM{idx}, sac{idx}] = SAC2d(bone.C6, C5_temp, pixConv, 0);
 %             end
+        if render == "Y"
             [sacMM{idx}, sac{idx}] = SAC2d(bone.C6, C5_temp, pixConv, 0);
-
+        else
+            [sacMM{idx}, ~] = SAC2d(bone.C6, C5_temp, pixConv, 0);
+        end
     %% plot
+    if render == "Y"
 
          set(0, 'currentfigure', f);  %# for figures
 
          colors = {[250 70 22]./256, [0 33 165]./265};
-
+    end
+    
         C6toC5{idx} = inv(C5toC6);
         % Calculate result Euler angles and AzElRo
         results(idx, 1:3) = (C6toC5{idx}(1:3, 4)).';
         results(idx, 4:6) = getRotations(123, C6toC5{idx});
         
-        [C5Inf, C5Sup] = findMinimums(bone.C5, 0);
-        [C6Inf, C6Sup] = findMinimums(bone.C6, 0);
-        
-        distraction = results(:,3) + C5Inf - C6Sup;
+        distraction = results(idx,3) + C5Inf - C6Sup;
 
+     if render == "Y"
        % Fix the axes scaling, and set a nice view angle
        axis('off')
          subplot_tight(2,1,1,[])
@@ -216,11 +231,14 @@ try
         if mod(idx, 400) == 0
             vidOut(sacAnimation, animation, videoPath)
         end
+     end
         
         
     end
     
-    vidOut(sacAnimation, animation, videoPath)
+    if render == "Y"
+        vidOut(sacAnimation, animation, videoPath)
+    end
     
 catch ME
     fprintf("Error at frame: %f", round(idx));

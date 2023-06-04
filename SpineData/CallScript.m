@@ -6,7 +6,6 @@ addpath(homePath + "Sample");
 addpath(homePath + "StockMatlabScripts");
 addpath(homePath + "CustomMatlabScripts");
 addpath(homePath + "StaticTransformationMatrices");
-
 mocapPath = homePath + 'MocapData';
 CADPath = homePath + 'CTSegmentations';
 
@@ -27,7 +26,7 @@ outDir =  homePath + 'ProcessedData/' + patientCode;
     if ~exist(outDir, 'dir')
         mkdir(outDir)
     end
-
+addpath(outDir)
 % Find STL files
 addpath(CADPath)
 
@@ -54,7 +53,7 @@ dirs = dir(mocapPath+CAD_code);
 %patientPath = '/CAD_E/Cad_E_11-05-07/';
 
 try
-    for trial = 1:length(trialName)
+    for trial = 7:length(trialName)
         patientPath = CAD_code + "/" + trialName(trial);
 
         patientPath = char(patientPath);
@@ -74,9 +73,18 @@ try
         copyfile(alignmentPath+".xls", alignmentPath+".txt");
         copyfile(posePath+".xls", posePath+".txt");
 
-
+        if trial == 7
+            check.start = 1062;
+            check.distraction = importdata('Cad_E_11-23-13_distraction_check1062.txt');
+            check.sacMM = num2cell(importdata('Cad_E_11-23-13_sacMM_check1062.txt'));
+            
+            check.truth = "Y";
+        else
+            check.truth = "N";
+        end
+        
         [distraction, sacMM, ~] = spineProcessing(...
-            alignmentPath, posePath, boneFiles, beadFiles, outputPath, polTbead);
+            alignmentPath, posePath, boneFiles, beadFiles, outputPath, "N", check.truth, check, polTbead);
 
         writematrix(distraction, outputPath+"_distraction.txt");
         writematrix(cell2mat(sacMM), outputPath+"_sacMM");
