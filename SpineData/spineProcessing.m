@@ -1,4 +1,4 @@
-function [distraction, sacMM, bone] = spineProcessing(alignmentPath, posePath, boneFiles, beadFiles, videoPath, render, readFromCheckpoint, checkpoint, polTbead)
+function [distraction, sacMM, bone, checkpt] = spineProcessing(alignmentPath, posePath, boneFiles, beadFiles, videoPath, render, readFromCheckpoint, checkpoint, polTbead)
 
 % pixel conversion from dicom file
 pixConv = 0.0285*0.0285;
@@ -240,8 +240,19 @@ try
         vidOut(sacAnimation, animation, videoPath)
     end
     
+    checkpt = [];
+    
 catch ME
-    fprintf("Error at frame: %f", round(idx));
+    % try to save checkpoint
+    try
+        checkpt = check(length(distraction), distraction, cell2mat(sacMM));
+        fprintf("Checkpoint Saved \n");
+    catch
+        fprintf("\n No Checkpoint Saved");
+    end
+    
+    
+    fprintf("Error at frame: %f \n", round(idx));
 %     fprintf("\nError Message: %s", ME.message)
     fprintf('Line %d: Error Message:\n%s', ...
         ME.stack(1).line, ME.message);
@@ -269,4 +280,12 @@ function vidOut(sac_temp, animation, videoPath)
 end
     %close(gcf);
 
+%% Save Checkpoint
+
+function check = checkpoint(start, dist, sacMM)
+    check.truth = "Y";
+    check.distraction = dist;
+    check.sacMM = sacMM;
+    check.start = start;
+end
 

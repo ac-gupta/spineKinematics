@@ -83,7 +83,7 @@ try
             check.truth = "N";
         end
         
-        [distraction, sacMM, ~] = spineProcessing(...
+        [distraction, sacMM, ~, check] = spineProcessing(...
             alignmentPath, posePath, boneFiles, beadFiles, outputPath, "N", check.truth, check, polTbead);
 
         writematrix(distraction, outputPath+"_distraction.txt");
