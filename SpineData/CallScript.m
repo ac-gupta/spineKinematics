@@ -1,7 +1,7 @@
 %% Call Script
 
 %% Add Paths
-homePath = "C:/Users/acgis/Documents/GitHub/SpineKinematics/SpineData/";
+homePath = "/home/a.gupta/spineKinematics/SpineData/";
 addpath(homePath + "Sample");
 addpath(homePath + "StockMatlabScripts");
 addpath(homePath + "CustomMatlabScripts");
