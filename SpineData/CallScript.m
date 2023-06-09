@@ -66,12 +66,14 @@ try
         outputPath = outDir + "/" + string(outputPath{3});
         %% Choose files
 
-        alignmentPath = mocapPath + patientPath + "/Alignment";
         posePath = mocapPath + patientPath + "/Raw";
 
         % Turn XLS into TXT
-        copyfile(alignmentPath+".xls", alignmentPath+".txt");
-        copyfile(posePath+".xls", posePath+".txt");
+        if isfile(posePath+".txt")
+            continue
+        else
+            copyfile(posePath+".xls", posePath+".txt");
+        end
 
         if trial == 7
             check.start = 1062;
@@ -84,7 +86,11 @@ try
         end
         
         [distraction, sacMM, ~, check] = spineProcessing(...
-            alignmentPath, posePath, boneFiles, beadFiles, outputPath, "N", check.truth, check, polTbead);
+            posePath, boneFiles, beadFiles, outputPath, "N", check.truth, check, polTbead);
+        
+        if check ~= []
+            savemat(outputPath+"_checkpoint", check);
+        end
 
         writematrix(distraction, outputPath+"_distraction.txt");
         writematrix(cell2mat(sacMM), outputPath+"_sacMM");
