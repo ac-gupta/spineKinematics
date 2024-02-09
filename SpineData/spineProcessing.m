@@ -95,8 +95,10 @@ C6verts  = [vertices.'; ones(1,length(vertices.'))];
     
     
     % find the most inferior and superior points of each vertebrae.
-    [C5Inf, ~] = findMinimums(bone.C5, 0);
-    [~, C6Sup] = findMinimums(bone.C6, 0);
+    [C5Inf, ~] = findMinimums(bone.C5, 1);
+    [~, C6Sup] = findMinimums(bone.C6, 1);
+    
+    
 %% Set up loop
 
 N = length(pose.C5);
@@ -114,7 +116,7 @@ else
 end
 
 try
-    for idx = start:N
+    for idx = start:-1
 
         % shows progress
         if mod(idx, 10) == 0

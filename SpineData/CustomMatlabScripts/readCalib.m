@@ -74,7 +74,7 @@ function mat = readCalib(filename, type, stl)
 %         
 %         
                      % Add camera lights
-         light('Position',[0 -1 0],'Style','infinite')
-         camlight('headlight');
-         material('dull');
+%          light('Position',[0 -1 0],'Style','infinite')
+%          camlight('headlight');
+%          material('dull');
     

@@ -27,16 +27,19 @@ function plotCalib(mats, stls)
     
     
         patch(obj.(title(n)), 'FaceColor', colors{n}, ...
-             'EdgeColor', 'none') %, ...
+             'EdgeColor', 'none', 'FaceAlpha', 0.2) %, ...
 %              'FaceLighting', 'gouraud', ...
 %              'BackFaceLighting', 'reverselit')
         hold on
         ori = origin;
-        quiver3(ori(1), ori(2), ori(3), Z(1),Z(2), Z(3), 50, 'Color', colors{n})
+        quiver3(ori(1), ori(2), ori(3), X(1),X(2), X(3), 50, ':','Color', colors{n})
         hold on
-        quiver3(ori(1), ori(2), ori(3), X(1),X(2), X(3), 50, 'Color', colors{n})
-        quiver3(ori(1), ori(2), ori(3), Y(1),Y(2), Y(3), 50, 'Color', colors{n})
-        
+        quiver3(ori(1), ori(2), ori(3), Y(1),Y(2), Y(3),50, '-', 'Color', colors{n})
+        quiver3(ori(1), ori(2), ori(3), Z(1),Z(2), Z(3),50, '--', 'Color', colors{n})
+
+        if n == 1
+            legend("", "X", "Y", "Z");
+        end
         
         
     end

@@ -1,0 +1,1 @@
+CTSegmentations: .stl and .txt files describing the C5 and C6 vertebrae and their attached coordinate systems.

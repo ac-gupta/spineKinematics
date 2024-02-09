@@ -1,7 +1,20 @@
  function [inferiorCenter, superiorCenter] = findMinimums(mesh, vis)
-%     
+% find the inferior and superior center points on a vertebrae. Center point
+% is taken to have the same (x,y) coordinates as the vertebra with only a
+% z-axis translation.
+
+% Inputs:
+%       mesh:   mesh object (with fields Faces and Vertices) of the vertebra.
+%       vis:    1/0 to choose if visualization is desired.
+% Outputs:
+%       inferiorCenter:     Z-Coordinate of the center point of the
+%                           inferior face.
+%       superiorCenter:     Z-Coordinate of the center point of the 
+%                           superior face.
+
+
 % check if Y and Z axes are swapped
-if mean(mesh.Vertices(:,2)) < mean(mesh.Vertices(:,3))
+if range(mesh.Vertices(:,2)) > range(mesh.Vertices(:,3))
     temp = mesh.Vertices(:,2);
     mesh.Vertices(:,2) = mesh.Vertices(:,3);
     mesh.Vertices(:,3) = temp;

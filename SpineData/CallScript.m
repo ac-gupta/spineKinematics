@@ -2,7 +2,7 @@
 
 %% Add Paths
 homePath = "C:/Users/acgis/Documents/GitHub/SpineKinematics/SpineData/";
-addpath(homePath + "Sample");
+% addpath(homePath + "Sample");
 addpath(homePath + "StockMatlabScripts");
 addpath(homePath + "CustomMatlabScripts");
 addpath(homePath + "StaticTransformationMatrices");
@@ -53,7 +53,7 @@ dirs = dir(mocapPath+CAD_code);
 %patientPath = '/CAD_E/Cad_E_11-05-07/';
 
 try
-    for trial = 7:length(trialName)
+    for trial = 1:1
         patientPath = CAD_code + "/" + trialName(trial);
 
         patientPath = char(patientPath);
@@ -69,30 +69,32 @@ try
         posePath = mocapPath + patientPath + "/Raw";
 
         % Turn XLS into TXT
-        if isfile(posePath+".txt")
-            continue
-        else
-            copyfile(posePath+".xls", posePath+".txt");
-        end
+%         if isfile(posePath+".txt")
+%             continue
+%         else
+%             copyfile(posePath+".xls", posePath+".txt");
+%         end
+% 
+%         if trial == 
+%             check.start = 1062;
+%             check.distraction = importdata('Cad_E_11-23-13_distraction_check1062.txt');
+%             check.sacMM = num2cell(importdata('Cad_E_11-23-13_sacMM_check1062.txt'));
+%             
+%             check.truth = "Y";
+%         else
+%             check.truth = "N";
+%         end
 
-        if trial == 7
-            check.start = 1062;
-            check.distraction = importdata('Cad_E_11-23-13_distraction_check1062.txt');
-            check.sacMM = num2cell(importdata('Cad_E_11-23-13_sacMM_check1062.txt'));
-            
-            check.truth = "Y";
-        else
-            check.truth = "N";
-        end
+        check.truth = "N";
         
-        [distraction, sacMM, ~, check] = spineProcessing(...
+        [distraction, ~, ~, check] = spineProcessing(...
             posePath, boneFiles, beadFiles, outputPath, "N", check.truth, check, polTbead);
         
         if check ~= []
             savemat(outputPath+"_checkpoint", check);
         end
 
-        writematrix(distraction, outputPath+"_distraction.txt");
+        writematrix(distraction, outputPath+"_distractionRight.txt");
         writematrix(cell2mat(sacMM), outputPath+"_sacMM");
     
     end
