@@ -23,9 +23,10 @@ function pose = ReadMocap_v2(filename)
     % visualize for now
 %     figure()
 %     plot(marker.M2(:,6)); hold on;
-%     
-    marker.M2((marker.M2(:,6)>170),6) = marker.M2((marker.M2(:,6)>170),6) - 360;
-
+%   
+if range(marker.M2(:,6)) > 180
+    marker.M2((marker.M2(:,6)<-170),6) = marker.M2((marker.M2(:,6)<-170),6) + 360;
+end
 %     plot(marker.M2(:,6)); 
     
     %% filter data

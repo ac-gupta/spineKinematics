@@ -1,6 +1,6 @@
 %% Check mean XYZ Raw Displacements of polhemus sensors for each cadaver
 
-load("stats_master.mat")
+% load("stats_master.mat")
 %% Plot
 
 stats = mean(data, 'omitnan');

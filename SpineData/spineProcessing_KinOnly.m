@@ -62,7 +62,7 @@ end
 
 stls = {boneFiles{1}; boneFiles{2}; beadFiles{1}; beadFiles{2}};
 mats = {vertTglobal.C5, vertTglobal.C6, beadTglobal.C5, beadTglobal.C6};
-% plotCalib(mats, stls);
+plotCalib(mats, stls);
 
 %% Create Meshes
 % from the STL files, create matlab meshes that can be rendered using
@@ -220,10 +220,10 @@ frameMats{2} = C6beadtoGlobal * boneTbead.C6;
         
     end
     
-    if render == "Y"
-%         vidOut(sacAnimation, animation, videoPath)
-        vidOut(animation, videoPath);
-    end
+%     if render == "Y"
+% %         vidOut(sacAnimation, animation, videoPath)
+%         vidOut(animation, videoPath);
+%     end
     
     % if it finished successfully, no checkpoint is needed
     checkpt = [];

@@ -53,6 +53,6 @@ for p = 1:10 %10
             opts.SelectedVariableNames= [3,4,5,9,10,11];
             raw = readmatrix(posePath, opts);
             
-            data(trial,:,p) = [mean(raw(:,4:6)-raw(:,1:3)) std(raw(:,4:6)-raw(:,1:3))];
+            data(trial,:,p) = [mean(raw(:,4:6)-raw(:,1:3)) - (raw(1,4:6) - raw(1,1:3)), std(raw(:,4:6)-raw(:,1:3))- (raw(1,4:6) - raw(1,1:3))];
         end
 end
