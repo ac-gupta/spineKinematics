@@ -1,4 +1,4 @@
-function [distraction, sacMM, bone, checkpt] = spineProcessing(posePath, boneFiles, beadFiles, render, videoPath, readFromCheckpoint, checkpoint, polTbead)
+function [distraction, sacMM, bone, checkpt] = spineProcessing(posePath, boneFiles, beadFiles, render, videoPath, readFromCheckpoint, checkpoint, polTbead, swap)
 % Process the vertebral data collected with Polhemus sensors to determine
 % 2D SAC.
 
@@ -60,9 +60,9 @@ end
 % plot the coordinate systems as a double check. If you want these
 % graphics, uncomment the following lines. 
 
-% stls = {boneFiles{1}; boneFiles{2}; beadFiles{1}; beadFiles{2}};
-% mats = {vertTglobal.C5, vertTglobal.C6, beadTglobal.C5, beadTglobal.C6};
-%plotCalib(mats, stls);
+stls = {boneFiles{1}; boneFiles{2}; beadFiles{1}; beadFiles{2}};
+mats = {vertTglobal.C5, vertTglobal.C6, beadTglobal.C5, beadTglobal.C6};
+plotCalib(mats, stls);
 
 %% Create Meshes
 % from the STL files, create matlab meshes that can be rendered using
@@ -95,8 +95,8 @@ C6verts  = [vertices.'; ones(1,length(vertices.'))];
     
     
     % find the most inferior and superior points of each vertebrae.
-    [C5Inf, ~] = findMinimums(bone.C5, 1);
-    [~, C6Sup] = findMinimums(bone.C6, 1);
+    [C5Inf, ~] = findMinimums(bone.C5, 1, swap(1));
+    [~, C6Sup] = findMinimums(bone.C6, 1, swap(2));
     
     
 %% Set up loop
@@ -116,7 +116,7 @@ else
 end
 
 try
-    for idx = start:-1
+    for idx = start:N
 
         % shows progress
         if mod(idx, 10) == 0

@@ -46,8 +46,8 @@ Limits = [-50 250 -150 150 -375 -75; ...%ALPHA
           -40 260 -175 125 -125 175; ...%HECTOR
           0 0 0 0 0 0; ...              %IOTA
           0 150 -70 80 -250 -100; ...   %Kappa
-          -25 170 -100 100 -275 -75];...% kappa/hector bones
-
+          -25 170 -100 100 -275 -75; ...% kappa/hector bones
+          -100 200 -150 150 -300 0]; 
           
       
 trials = [ "Cad_A_14-12-05","Cad_B_11-10-50","Cad_E_11-05-07",...
@@ -55,9 +55,9 @@ trials = [ "Cad_A_14-12-05","Cad_B_11-10-50","Cad_E_11-05-07",...
 
 
 
-patientCode = 'Charlie';
-trial = char(trials(1));
-lims = Limits(5,:);
+patientCode = 'Fred';
+trial = char("CAD_D_13-44-42");
+lims = Limits(12,:);
 pat = 2;
 STLCode = 'Alpha';
 suffix = "_AlphaBones2Hz";
@@ -69,7 +69,7 @@ suffix = "_AlphaBones2Hz";
     trialName = char(trial); 
     
 % %% 
-if STLCode(1) == 'K'
+if patientCode(1) == 'K'
     CAD_code = "/Cad_J";
 else
     CAD_code = "/CAD_"+patientCode(1);

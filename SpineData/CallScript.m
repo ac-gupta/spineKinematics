@@ -18,7 +18,9 @@ polTbead = load("polhemusTBeadV2.mat");
 warning('off', 'all')
 %% Patient Specific
 
-patientCode = 'Epsilon';
+patientCode = 'Hector';
+STLCode = 'Iota';
+swap = ["N", "N"];
 
 % set output dir
 outDir =  homePath + 'ProcessedData/' + patientCode;
@@ -30,12 +32,12 @@ addpath(outDir)
 % Find STL files
 addpath(CADPath)
 
-STLdir = [char(CADPath) '/' patientCode];
-boneFiles = {[STLdir 'STL/'  patientCode '_C5.stl'], [STLdir 'STL/' patientCode '_C6.stl'], ...
-    [STLdir '/' patientCode '_C5.txt'], [STLdir '/' patientCode '_C6.txt']};
+STLdir = [char(CADPath) '/' STLCode];
+boneFiles = {[STLdir 'STL/'  STLCode '_C5_dec.stl'], [STLdir 'STL/' STLCode '_C6_dec.stl'], ...
+    [STLdir '/' STLCode '_C5.txt'], [STLdir '/' STLCode '_C6.txt']};
 
-beadFiles = {[STLdir 'STL/'  patientCode '_C5_beads.stl'], [STLdir 'STL/' patientCode '_C6_beads.stl'], ...
-    [STLdir '/' patientCode '_C5_beads.txt'], [STLdir '/' patientCode '_C6_beads.txt']};    
+beadFiles = {[STLdir 'STL/'  STLCode '_C5_beads.stl'], [STLdir 'STL/' STLCode '_C6_beads.stl'], ...
+    [STLdir '/' STLCode '_C5_beads.txt'], [STLdir '/' STLCode '_C6_beads.txt']};    
 
 
 boneFiles = string(boneFiles);
@@ -88,7 +90,7 @@ try
         check.truth = "N";
         
         [distraction, ~, ~, check] = spineProcessing(...
-            posePath, boneFiles, beadFiles, outputPath, "N", check.truth, check, polTbead);
+            posePath, boneFiles, beadFiles, "Y", outputPath, check.truth, check, polTbead, swap);
         
         if check ~= []
             savemat(outputPath+"_checkpoint", check);

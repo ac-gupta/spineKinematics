@@ -55,12 +55,12 @@ trials = [ "Cad_A_14-12-05","Cad_B_11-10-50","Cad_E_11-05-07",...
 
 
 
-patientCode = 'Alpha';
-trial = char("Cad_A_16-00-28");
-lims = Limits(1,:);
+patientCode = 'Hector';
+trial = char(trials(4));
+lims = Limits(8,:);
 pat = 2;
-STLCode = 'Kappa';
-suffix = "_KappaBones2Hz";
+STLCode = 'Iota';
+suffix = "_IotaBones2Hz";
 
 
 
@@ -69,7 +69,7 @@ suffix = "_KappaBones2Hz";
     trialName = char(trial); 
     
 %% 
-if patientCode == 'Kappa'
+if string(patientCode) == "Kappa"
     CAD_code = "/Cad_J";
 else
     CAD_code = "/CAD_"+patientCode(1);
