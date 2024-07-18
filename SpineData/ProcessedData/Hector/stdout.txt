@@ -1,0 +1,33 @@
+if system_dependent('IsDebugMode')==1, dbcont; end
+
+frame 20/2667
+frame 30/2667
+frame 40/2667
+frame 50/2667
+frame 60/2667
+frame 70/2667
+frame 80/2667
+frame 90/2667
+frame 100/2667
+frame 110/2667
+frame 120/2667
+frame 130/2667
+frame 140/2667
+frame 150/2667
+frame 160/2667
+frame 170/2667
+frame 180/2667
+frame 190/2667
+frame 200/2667
+frame 210/2667
+frame 220/2667
+frame 230/2667
+frame 240/2667
+frame 250/2667
+frame 260/2667
+frame 270/2667
+frame 280/2667
+frame 290/2667
+frame 300/2667
+frame 310/2667
+frame 320/2667

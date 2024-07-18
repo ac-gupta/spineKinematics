@@ -43,7 +43,7 @@ end
     
     marker.time = marker.time(1:fs/ds:end,:);
     marker.frame=  marker.frame(1:fs/ds:end,:);
-     
+%      
     %%    
     pose.C5 = getAttMat(marker.M1);
     pose.C6 = getAttMat(marker.M2);

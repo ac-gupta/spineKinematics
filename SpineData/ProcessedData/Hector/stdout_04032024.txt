@@ -1,0 +1,17 @@
+CallScript
+
+frame 10/2667
+frame 20/2667
+frame 30/2667
+frame 40/2667
+frame 50/2667
+frame 60/2667
+frame 70/2667
+frame 80/2667
+frame 90/2667
+frame 100/2667
+frame 110/2667
+frame 120/2667
+frame 130/2667
+frame 140/2667
+frame 150/2667

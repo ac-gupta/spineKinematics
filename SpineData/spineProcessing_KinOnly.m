@@ -62,7 +62,7 @@ end
 
 stls = {boneFiles{1}; boneFiles{2}; beadFiles{1}; beadFiles{2}};
 mats = {vertTglobal.C5, vertTglobal.C6, beadTglobal.C5, beadTglobal.C6};
-plotCalib(mats, stls);
+% plotCalib(mats, stls);
 
 %% Create Meshes
 % from the STL files, create matlab meshes that can be rendered using
@@ -176,7 +176,7 @@ frameMats{2} = C6beadtoGlobal * boneTbead.C6;
         % Calculate result Euler angles and AzElRo. These will not be used,
         % but may be useful at a future date.
         results(idx, 1:3) = (C6toC5{idx}(1:3, 4)).';
-        results(idx, 6:-1:4) = -getRotations(123, C6toC5{idx}.');
+        results(idx, 6:-1:4) = getRotations(123, C6toC5{idx}.');
 %         
         % calculate bottom to top distraction (in mm)
 %         distraction(idx,1) = C5toC6(2,4) + C5Inf - (C6Sup*C5toC6(2,2));

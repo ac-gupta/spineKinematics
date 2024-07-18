@@ -37,7 +37,7 @@ frames= 0;
 % hector: xlim([-40 260]); ylim([-175 125]); zlim([-125 175]);
 % xyz limits
 Limits = [-50 250 -150 150 -375 -75; ...%ALPHA
-          50 280 -145 75 -300 -70; ... %BETA    
+          0 320 -160 160 -350 -30; ... %BETA    
           0 0 0 0 0 0; ...              %CHARLIE
           0 0 0 0 0 0; ...              %DELTA
           -50 250 -150 150 -300 0; ...  %EPSILON
@@ -50,17 +50,17 @@ Limits = [-50 250 -150 150 -375 -75; ...%ALPHA
 
           
       
-trials = [ "Cad_A_14-12-05","Cad_B_11-10-50","Cad_E_11-05-07",...
-"Cad_H_11-16-03"];
+trials = [ "Cad_A_14-12-05","Cad_B_13-21-30", "Cad_C_17-00-27", "Cad_E_11-05-07",...
+"Cad_H_11-16-03", "Cad_D_12-43-19", "Cad_I_16-21-45"];
 
 
 
-patientCode = 'Hector';
-trial = char(trials(4));
-lims = Limits(8,:);
-pat = 2;
-STLCode = 'Iota';
-suffix = "_IotaBones2Hz";
+patientCode = 'Charlie';
+trial = char(trials(3));
+lims = Limits(1,:);
+% pat = 9;
+STLCode = 'Kappa';
+suffix = "_KappaBones2Hz";
 
 
 
