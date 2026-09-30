@@ -1,4 +1,4 @@
- function [inferiorCenter, superiorCenter] = findMinimums(mesh, vis)
+ function [inferiorCenter, superiorCenter] = findMinimums(mesh, vis, varargin)
 % find the inferior and superior center points on a vertebrae. Center point
 % is taken to have the same (x,y) coordinates as the vertebra with only a
 % z-axis translation.
@@ -20,7 +20,17 @@ if range(mesh.Vertices(:,2)) > range(mesh.Vertices(:,3))
     mesh.Vertices(:,3) = temp;
 end
 
-
+% swap X and Y axes if necessary. Not sure why I had added this
+% functionality; see "ea4690d" commit
+if ~isempty(varargin)
+    swap = varargin{1};
+    
+    if swap == "Y"
+        temp = mesh.Vertices(:,1);
+        mesh.Vertices(:,1) = mesh.Vertices(:,2);
+        mesh.Vertices(:,2) = temp;
+    end
+end
     
 % indices within 5mm of the origin (center of the vertebral body)
 infInds2 = find((mesh.Vertices(:,1)).^2 + (mesh.Vertices(:,3)).^2 < 25);

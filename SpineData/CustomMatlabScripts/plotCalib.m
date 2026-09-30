@@ -38,7 +38,7 @@ function plotCalib(mats, stls)
         quiver3(ori(1), ori(2), ori(3), Z(1),Z(2), Z(3),50, '--', 'Color', colors{n})
 
         if n == 1
-            legend("", "X", "Y", "Z");
+            legend("", "X", "Y", "Z", "AutoUpdate", "off");
         end
         
         
