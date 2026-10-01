@@ -143,8 +143,8 @@ try
 
     % plot everything with respect to G1 (polhemus global). Stack matrices in order:
     % C5, C6, C5Beads, C6Beads, C5Pol, C6Pol, 
-    stls{5} = "C:\Users\acgis\Documents\GitHub\spineKinematics\SpineData\CTSegmentations\C5_PolhemusShelf.stl";
-    stls{6} = "C:\Users\acgis\Documents\GitHub\spineKinematics\SpineData\CTSegmentations\C6_Pair.stl";
+    stls{5} = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\CTSegmentations\C5_PolhemusShelf.stl";
+    stls{6} = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\CTSegmentations\C6_Pair.stl";
 
     frameMats{5} = pose.C5{idx};
     frameMats{6} = pose.C6{idx};

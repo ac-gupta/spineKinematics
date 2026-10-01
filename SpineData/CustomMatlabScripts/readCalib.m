@@ -23,6 +23,7 @@ function mat = readCalib(filename, type, stl)
             Y = Yp;
             
         case 'beads'
+            % in screen context
             LI = data(1,:);
             LS = data(2,:);
             RI = data(3,:);

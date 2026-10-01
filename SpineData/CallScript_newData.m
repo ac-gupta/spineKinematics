@@ -1,7 +1,7 @@
 %% Call Script
 
 %% Add Paths
-homePath = "C:\Users\acgis\Downloads\spineKinematics\SpineData\";
+homePath = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\";
 % addpath(homePath + "Sample");
 addpath(homePath + "StockMatlabScripts");
 addpath(homePath + "CustomMatlabScripts");
@@ -51,6 +51,7 @@ dirs = dir(mocapPath+CAD_code);
     for i = 1:numel(dirs)-2
         trialName(i) = string(dirs(i+2).name);
     end
+    
 %% Trial Specific
 %patientPath = '/CAD_E/Cad_E_11-05-07/';
 
@@ -71,11 +72,9 @@ try
         posePath = mocapPath + patientPath + "/Raw";
 
         % Turn XLS into TXT
-%         if isfile(posePath+".txt")
-%             continue
-%         else
-%             copyfile(posePath+".xls", posePath+".txt");
-%         end
+        if isfile(posePath+".xls")
+            copyfile(posePath+".xls", posePath+".txt");
+        end
 % 
 %         if trial == 
 %             check.start = 1062;
@@ -89,14 +88,14 @@ try
 
         check.truth = "N";
         
-        [distraction, ~, ~, check] = spineProcessing(...
+        [distraction, sacMM, ~, check] = spineProcessing(...
             posePath, boneFiles, beadFiles, "Y", outputPath, check.truth, check, polTbead, swap);
         
         if check ~= []
             savemat(outputPath+"_checkpoint", check);
         end
 
-        writematrix(distraction, outputPath+"_distractionRight.txt");
+        writematrix(distraction, outputPath+"_distraction.txt");
         writematrix(cell2mat(sacMM), outputPath+"_sacMM");
     
     end

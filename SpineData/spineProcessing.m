@@ -31,7 +31,8 @@ function [distraction, sacMM, bone, checkpt] = spineProcessing(posePath, boneFil
 
 
 
-% pixel conversion from dicom file in mm2
+% pixel conversion from dicom file in mm2 [edit: this doesn't matter at
+% all since the stls are exported in mm]
 pixConv = 0.0285*0.0285;
 
 %set verts to iterate through stuct field names
@@ -157,7 +158,7 @@ try
         results(idx, 4:6) = getRotations(123, C6toC5{idx});
         
         % calculate bottom to top distraction (in mm)
-        distraction = results(idx,3) + C5Inf - C6Sup;
+        distraction(idx) = results(idx,3) + C5Inf - C6Sup;
 
      if render == "Y"
        % Fix the axes scaling, and set a nice view angle
@@ -262,7 +263,7 @@ try
              clf
          end
     %   save the videos every 400 frames as a safeguard   
-        if mod(idx, 400) == 0
+        if mod(idx, 200) == 0
             vidOut(sacAnimation, animation, videoPath)
         end
      end

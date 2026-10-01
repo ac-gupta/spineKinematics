@@ -1,4 +1,8 @@
 *.mcs
 *.mxp
+*.asv
 SpineData/workspace/
 SpineData/ProcessedData/Delta/Cad_D_14-32-22_render.mp4
+SpineData/CTSegmentations/
+SpineData/MocapData/
+SpineData/ProcessedData/
