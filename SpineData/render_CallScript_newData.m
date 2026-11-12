@@ -11,8 +11,9 @@ CADPath = homePath + 'CTSegmentations';
 addpath(mocapPath)
 
 % load pol2bead matrices (static)
-polTbead = load("polhemusTBeadV2.mat");
+polTbead = load("polhemusTBeadV2_cc2026.mat");
     polTbead = polTbead.polTbead;
+% %     %     polTbead.C5(1:3, 4) = -polTbead.C5(1:3, 4);
 
 warning('off', 'all')
 
@@ -115,7 +116,7 @@ outputPath = strsplit(patientPath, '/');
 outputPath = outDir + "/" +  string(outputPath{3}) + suffix;
 %% Choose files
 
-posePath = mocapPath + patientPath + "/Raw";
+posePath = mocapPath + patientPath + "/Processed";
 
 check.truth = "N";
 

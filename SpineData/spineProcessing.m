@@ -41,6 +41,8 @@ verts = {'C5', 'C6'};
 % load in mocap data: 
 pose = ReadMocap_v2(posePath + ".txt");
 
+% for animations, render every Nth frame (higher is faster)
+renderFreq = 50;
 %%  Set up figure/mesh
 
 if render == "Y"
@@ -139,9 +141,9 @@ try
         C5_temp_verts = inv(C5toC6) * C5verts;    
         C5_temp.Vertices = C5_temp_verts(1:3, :)';
 
-        if render == "Y"
+        if render == "Y" && mod(idx, renderFreq) == 1
             % Create matrix of image data to create rendering of SAC
-            [sacMM{idx}, sac{idx}] = SAC2d(bone.C6, C5_temp, pixConv, 0);
+            [sacMM{idx}, sac{idx}] = SAC2d(bone.C6, C5_temp, pixConv, 1);
         else
             [sacMM{idx}, ~] = SAC2d(bone.C6, C5_temp, pixConv, 0);
         end
@@ -160,7 +162,7 @@ try
         % calculate bottom to top distraction (in mm)
         distraction(idx) = results(idx,3) + C5Inf - C6Sup;
 
-     if render == "Y"
+     if render == "Y" && mod(idx, renderFreq) == 1
        % Fix the axes scaling, and set a nice view angle
        axis('off')
          subplot_tight(2,1,1,[])
@@ -241,16 +243,17 @@ try
                  material('dull');
     % %         
 
-         if mod(idx, 50) == 1
+%          if mod(idx, renderFreq) == 1
             % take the frame for rendering
-            animation(frame) = getframe(gcf);
-            frameIdxs(frame) = idx;
-            
-            sacAnimation(frame) = sac(idx);
-            
-            frame = frame+1;
+        animation(frame) = getframe(gcf);
+        frameIdxs(frame) = idx;
 
-         end
+        sacAnimation(frame) = getframe(sac{idx});
+        close(sac{idx});
+
+        frame = frame+1;
+
+%          end
 
          if idx == 1
              hold on
@@ -262,8 +265,8 @@ try
              % don't clear the screen at the last iteration
              clf
          end
-    %   save the videos every 400 frames as a safeguard   
-        if mod(idx, 200) == 0
+    %   save the videos every 200 frames as a safeguard   
+        if mod(idx, 50) == 1
             vidOut(sacAnimation, animation, videoPath)
         end
      end
@@ -305,14 +308,14 @@ end
 
 function vidOut(sac_temp, animation, videoPath)
     % restructure SAC images
-    sac_temp{2,end} = []; % add blank double arrays to become colormap field
-    sacStruc = cell2struct(sac_temp, {'cdata', 'colormap'}, 1);
+%     sac_temp{2,end} = []; % add blank double arrays to become colormap field
+%     sacStruc = cell2struct(sac_temp, {'cdata', 'colormap'}, 1);
 
     renderPath = videoPath + "_render";
     sacPath = videoPath + "_SAC";
 
     vid_out = write_avi_animation(renderPath, animation);
-    vid_out = write_avi_animation(sacPath, sacStruc);
+    vid_out = write_avi_animation(sacPath, sac_temp);
 end
 
 %% Save Checkpoint

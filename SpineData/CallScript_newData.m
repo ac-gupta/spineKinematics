@@ -12,7 +12,7 @@ CADPath = homePath + 'CTSegmentations';
 addpath(mocapPath)
 
 % load pol2bead matrices (static)
-polTbead = load("polhemusTBeadV2.mat");
+polTbead = load("polTbead_newDataV2_cc2026.mat");
     polTbead = polTbead.polTbead;
 
 warning('off', 'all')
@@ -69,7 +69,7 @@ try
         outputPath = outDir + "/" + string(outputPath{3});
         %% Choose files
 
-        posePath = mocapPath + patientPath + "/Raw";
+        posePath = mocapPath + patientPath + "/Processed";
 
         % Turn XLS into TXT
         if isfile(posePath+".xls")

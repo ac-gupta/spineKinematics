@@ -37,7 +37,7 @@ pixConv = 0.0285*0.0285;
 verts = {'C5', 'C6'};
 
 % load in mocap data: 
-pose = ReadMocap_v2(posePath + ".txt");
+pose = ReadMocap_v2(posePath + ".xls");
 
 %%  Set up figure/mesh
 
@@ -143,8 +143,8 @@ try
 
     % plot everything with respect to G1 (polhemus global). Stack matrices in order:
     % C5, C6, C5Beads, C6Beads, C5Pol, C6Pol, 
-    stls{5} = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\CTSegmentations\C5_PolhemusShelf.stl";
-    stls{6} = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\CTSegmentations\C6_Pair.stl";
+    stls{5} = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\CTSegmentations\C6_Pair_2026_Corrected.stl";
+    stls{6} = "C:\Users\acgis\Documents\Non-UW_Research\spineKinematics\SpineData\CTSegmentations\C6_Pair_2026_Corrected.stl";
 
     frameMats{5} = pose.C5{idx};
     frameMats{6} = pose.C6{idx};
@@ -193,7 +193,7 @@ try
              clf
          end
     %   save the videos every 400 frames as a safeguard   
-        if mod(idx, 400) == 0
+        if mod(idx, 100) == 0
             vidOut(animation, videoPath)
         end
      end
@@ -283,17 +283,17 @@ colors = {[250 70 22]./256, [0 33 165]./265, [250 70 22]./256, [0 33 165]./265,[
                 if sp == 1
                     subplot_tight(2,2,2,[]);
                     view([-90 180]); % Lateral View
-                    xlim(lims(1:2));ylim(lims(3:4));zlim(lims(5:6));   
+%                     xlim(lims(1:2));ylim(lims(3:4));zlim(lims(5:6));   
                     axis('equal')
                 elseif sp == 2
                     subplot_tight(2,2,3,[])
                     view([-90 -90]);
-                    xlim(lims(1:2));ylim(lims(3:4));zlim(lims(5:6));   
+%                     xlim(lims(1:2));ylim(lims(3:4));zlim(lims(5:6));   
                 else
                     subplot_tight(2,2,4,[])
                     view([0,0]);
                     camroll(180);
-                    xlim(lims(1:2));ylim(lims(3:4));zlim(lims(5:6));   
+%                     xlim(lims(1:2));ylim(lims(3:4));zlim(lims(5:6));   
                 end
                         axis('off');
 
@@ -319,7 +319,7 @@ colors = {[250 70 22]./256, [0 33 165]./265, [250 70 22]./256, [0 33 165]./265,[
 
                     %% plot
                     patch(obj.(title(n)), 'FaceColor', colors{n}, ...
-                         'EdgeColor', 'none') %, ...
+                         'EdgeColor', 'none', 'FaceAlpha', 0.3) %, ...
             %              'FaceLighting', 'gouraud', ...
             %              'BackFaceLighting', 'reverselit')
                     hold on
@@ -338,7 +338,13 @@ colors = {[250 70 22]./256, [0 33 165]./265, [250 70 22]./256, [0 33 165]./265,[
                    axis('equal');
 %                    ax.Clipping = 'off';
                     view([90 90]); % Coronal View
-                else
+                elseif sp == 3
+                    subplot_tight(2,2,4,[])
+                   axis('off');
+                   axis('equal');
+                   ax.Clipping = 'off';
+                    view([0 0]); % Lateral View
+                elseif sp == 4
                    subplot_tight(2,2,1,[])
                    axis('off');
                    axis('equal');
